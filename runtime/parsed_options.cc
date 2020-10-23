@@ -365,6 +365,10 @@ std::unique_ptr<RuntimeParser> ParsedOptions::MakeParser(bool ignore_unrecognize
           .IntoKey(M::UseStderrLogger)
       .Define("-Xonly-use-system-oat-files")
           .IntoKey(M::OnlyUseSystemOatFiles)
+       .Define("-XAutoFastJni:_")
+          .WithType<bool>()
+          .WithValueMap({{"false", false}, {"true", true}})
+          .IntoKey(M::AutoFastJni)
       .Define("-Xverifier-logging-threshold=_")
           .WithType<unsigned int>()
           .IntoKey(M::VerifierLoggingThreshold)
@@ -846,6 +850,7 @@ void ParsedOptions::Usage(const char* fmt, ...) {
   UsageMessage(stream, "  -Xjitdisableopt\n");
   UsageMessage(stream, "  -Xjitsuspendpoll\n");
   UsageMessage(stream, "  -XX:mainThreadStackSize=N\n");
+  UsageMessage(stream, "  -XAutoFastJni\n");
   UsageMessage(stream, "\n");
 
   Exit((error) ? 1 : 0);
